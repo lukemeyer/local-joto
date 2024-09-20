@@ -19,3 +19,9 @@ $.ajax({
       data: JSON.stringify({gcode: 'M106 S150'}),
       type: 'POST'
     })
+// jot a file from the filesystem
+$.ajax({
+      url: '/rpc/SAM3XDL',
+    data: JSON.stringify({file: 'erase.g'}),
+      type: 'POST'
+    })
