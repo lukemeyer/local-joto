@@ -1,6 +1,14 @@
 # local-joto
 
-This project provides a local solution to control the Joto Whiteboard without relying on the cloud. It allows you to convert SVG images to GCode and send them directly to a Joto device on your local network.
+**⚠️ WORK IN PROGRESS ⚠️**
+
+This is a notebook of work to get the Joto Whiteboard to work without the cloud. It is not a finalized solution and may contain bugs or incomplete features. Use at your own risk.
+
+## Purpose & Goal
+
+The goal is to provide a CLI, script, or API to process an SVG and send it to the Joto over the local network, bypassing the need for cloud services.
+
+**WARNING:** There currently doesn't seem to be any safeguard in Joto to prevent sending G-code that moves the pen beyond the drawable area. **This could damage the hardware.** I have not tested this beyond the `extents.svg` included in the repo.
 
 ## Getting Started
 
