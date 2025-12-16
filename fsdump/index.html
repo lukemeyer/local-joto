@@ -1,0 +1,672 @@
+<html>
+<head>
+<style>
+  body,textarea,input,select{background: #187efa;border-radius:0;font:16px sans-serif;margin:0}.smooth{transition:all .2s}.btn,.nav a{text-decoration:none}.container{margin:0 20px;width:auto}label>*{display:inline}form>*{display:block;margin-bottom:10px}.btn{background:#999;border-radius:6px;border:0;color:#fff;cursor:pointer;display:inline-block;margin:2px 0;padding:12px 30px 14px}.btn:hover{background:#888}.btn:active,.btn:focus{background:#777}.btn-a{background:#0ae}.btn-a:hover{background:#09d}.btn-a:active,.btn-a:focus{background:#08b}.btn-b{background:#3c5}.btn-b:hover{background:#2b4}.btn-b:active,.btn-b:focus{background:#2a4}.btn-c{background:#ff6459; }.btn-c:hover{background:#ff6459}.btn-c:active,.btn-c:focus{background:#ff6459}.btn-sm{border-radius:50px;padding:10px 24px 11px; text-transform: uppercase; margin-bottom: 2em;}.row{margin:1% 0;overflow:auto}.col{float:left}.table,.c12{width:100%}.c11{width:91.66%}.c10{width:83.33%}.c9{width:75%}.c8{width:66.66%}.c7{width:58.33%}.c6{width:50%}.c5{width:41.66%}.c4{width:33.33%}.c3{width:25%}.c2{width:16.66%}.c1{width:8.33%}h1{font-size:3em}.btn,h2{font-size:2em}.ico{font:33px Arial Unicode MS,Lucida Sans Unicode}.addon,.btn-sm,.nav,textarea,input,select{outline:0;font-size:14px}textarea,input,select{padding:8px;border:1px solid #ccc}textarea:focus,input:focus,select:focus{border-color:#5ab}textarea,input[type=text]{-webkit-appearance:none; float: left; width:70%; background: #fff; border-radius: 50px; padding: 10px 15px;}.addon{padding:8px 12px;box-shadow:0 0 0 1px #ccc}.nav,.nav .current,.nav a:hover{background:#fff;color:#000}.nav{height:24px;padding:11px 0 15px}.nav a{color:#aaa;padding-right:1em;position:relative;top:-1px}.nav .pagename{font-size:22px;top:1px}.btn.btn-close{background:#000;float:right;font-size:25px;margin:-54px 7px;display:none}@media(min-width:1310px){.container{margin:auto;width:1270px}}@media(max-width:870px){.row .col{width:100%}}@media(max-width:500px){.btn.btn-close{display:block}.nav{overflow:hidden}.pagename{margin-top:-11px}.nav:active,.nav:focus{height:auto}.nav div:before{background:#fff;border-bottom:10px double; display: none; border-top:3px solid;content:'';float:right;height:4px;position:relative;right:3px;top:14px;width:20px}.nav a{padding:.5em 0;display:block;width:50%}}.table th,.table td{padding:.5em;text-align:left}.table tbody>:nth-child(2n-1){background:#ddd}.msg{padding:1.5em;background:#def;border-left:5px solid #59d}
+  .hero { background: #fff; margin-top: 2em; margin-bottom: 2em; padding: 40px; border-radius: 10px;}
+  .hero h2 { margin-top: 0; margin-bottom: 0.3em; }
+  h2{font-size: 18px;}
+  .c4 h3 { margin-top: 0; }
+  .c4 a { margin-top: 10px; display: inline-block; }
+  .form-control { margin-bottom: 0.5em; overflow: hidden; width: 100%; padding: 10px; box-sizing: border-box;}
+  .form-control input{width: 100%;}
+  .form label { width: 30%; float: left; padding-top: 10px; display: inline-block; }
+  .message, .playlist, .filelist, .console, .controls, .wifi{
+    border: 1px solid black;
+    padding: 0px 20px 20px 20px;
+    color: black;
+    border-radius: 10px;
+    background: white;
+  }
+  .file-upload-row{
+    padding: 0 20px;
+    border-bottom: 1px solid black;
+  }
+  .btn-fit{
+    width: 90%;
+    display: block;
+  }
+
+  .btn.blue{
+    background: #4d80ff;
+  }
+
+  .btn.black{
+    background: #000000;
+  }
+
+  .message{
+    margin-bottom: 20px;
+  }
+  #result {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    min-height: 7em; white-space: pre; padding: 0.5em; overflow: auto; margin-bottom: 2em;}
+  #gcode {
+    background-color: #fff; border: 1px solid #ccc; border-radius: 5px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    min-height: 7em; white-space: pre; padding: 0.5em; overflow: auto; margin-bottom: 2em;}
+    #logo{width: 100px;}
+    .cls-1 {fill: #ffd41d;}
+    .cls-1, .cls-2, .cls-3, .cls-4 {fill-rule: evenodd;}
+    .cls-2 {fill: #22c087;}.cls-3 {fill: #fd5c4c;}
+    .cls-4 {fill: #4d80ff;}
+
+  .upload-bar{
+    height: 20px;
+    width: 100%;
+    padding: 1px;
+    background: #e3e3e3;
+  }
+
+  .upload-progress{
+    height: 18px;
+    width: 100%;
+    padding: 1px;
+    background: #65c573;
+  }
+
+  .addElement, .element{
+    border-top: 1px solid black;
+    border-bottom :1px solid black;
+  }
+  
+  .addElement{
+    padding-top: 50px;
+  }
+
+  .element{
+    padding: 10px;
+  }
+
+  .element.delay{
+    background: #e3e3e3;
+  }
+
+  .element h2 span{
+    font-weight: normal;
+  }
+
+  .element h2{
+    display: inline-block;
+  }
+
+  .elementName{
+    background: white;
+    border-width: 0;
+    display: inline-block;
+  }
+
+  .elementDuration{
+    background: #e3e3e3;
+    border-width: 0;
+    display: inline-block;
+  }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+textarea {
+  width: 400px;
+  height: 150px;
+}
+</style>
+<script src="zepto.min.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container">
+      <a class="pagename current" style="font-weight: bold;">
+        <svg id="logo" data-name="Layer 1" viewBox="0 0 72.08 16.81">
+            <path id="_Compound_Path_" data-name="&lt;Compound Path&gt;" class="cls-1" d="M63.81,11.56A3.16,3.16,0,1,1,67,8.4,3.16,3.16,0,0,1,63.81,11.56ZM63.81,0a8.41,8.41,0,1,0,8.4,8.4A8.41,8.41,0,0,0,63.81,0Z" transform="translate(-0.13)"/>
+            <path id="_Path_" data-name="&lt;Path&gt;" class="cls-2" d="M53.4,5.78H48.46A.42.42,0,0,1,48,5.36V.42A.42.42,0,0,0,47.62,0H43.2a.41.41,0,0,0-.41.42V5.36a.43.43,0,0,1-.43.42H37.43A.42.42,0,0,0,37,6.2v4.41a.42.42,0,0,0,.42.42h4.93a.43.43,0,0,1,.43.42v4.94a.41.41,0,0,0,.41.42h4.42a.42.42,0,0,0,.42-.42V11.45a.42.42,0,0,1,.42-.42H53.4a.42.42,0,0,0,.42-.42V6.2a.42.42,0,0,0-.42-.42" transform="translate(-0.13)"/>
+            <path id="_Compound_Path_2" data-name="&lt;Compound Path&gt;" class="cls-3" d="M27,11.56A3.16,3.16,0,1,1,30.17,8.4,3.16,3.16,0,0,1,27,11.56ZM27,0a8.41,8.41,0,1,0,8.41,8.4A8.41,8.41,0,0,0,27,0Z" transform="translate(-0.13)"/>
+            <path id="_Path_2" data-name="&lt;Path&gt;" class="cls-4" d="M16.93.42A.42.42,0,0,0,16.51,0H12.1a.42.42,0,0,0-.42.42v8h0a3.15,3.15,0,0,1-6.28.39h0A.43.43,0,0,0,5,8.4H.55a.42.42,0,0,0-.42.42h0v0a8.41,8.41,0,0,0,16.8-.47v-8Z" transform="translate(-0.13)"/>
+        </svg>
+      </a>
+   </div>
+ </nav>
+ <div class="container">
+    <div class="row">
+      <div class="col c12">
+        <div class="message">
+            <h2>Hello!</h2>
+            <p>If you've found this page its because you've been speaking to Joto tech support, or its because you're a tinkerer!</p>
+            <p>If you're just having a look round we'd recommend that you read the advanced user guides <a href="http://www.joto.rocks" target="_blank">here</a></p>
+            <p>This app shows diagnostic information about your Joto device and allows you to set your wifi network details when Joto is in Access Point mode (AP) </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col c7">
+          <div class="console">
+              <h2>Device Console</h2>
+              <div id="result"></div>
+          </div>
+      </div>
+      <div class="col c1">&nbsp;</div>
+      <div class="col c4">
+        <div class="wifi">
+          <h2>Wifi Settings</h2>
+          <div class="form-control">
+            <input type="text" class="smooth" id="ssid" name="ssid" placeholder="Type WiFi network...">
+          </div>
+          <div class="form-control">
+            <input type="text" class="smooth" id="pass" name="pass" placeholder="Type WiFi password...">
+          </div>
+          <div class="form-control"><button href="#" class="btn btn-sm btn-c blue" id="saveWifi" style="float: right">Save WiFi settings</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col c7">
+        <div class="filelist">
+            <h2>File System</h2>
+            <div id="files">
+
+            </div>
+            <div id="0" class="file-upload-row">
+              <label for="input-file">Specify a file:</label><br>
+              <input  class="btn btn-sm btn-c black" type="file" id="input-file-0">
+            </div>
+            <div class="upload-bar">
+              <div class="upload-progress" style="width: 0%;"></div>
+            </div>
+        </div>
+      </div>
+      <div class="col c1">&nbsp;</div>
+      <div class="col c4">
+        <div class="playlist">
+            <h2>Playlist</h2>
+            <div class="form-control">
+              <input type="checkbox" id="loop" name="vehicle" value="loop" checked="checked">Loop<br>
+              <label for="ssid">Initial delay (secs)</label>
+              <input type="text" class="smooth" id="initialDelay" name="initialDelay" placeholder="Initial delay secs...">
+            </div>
+            <div class="currentElements">
+
+            </div>
+            <div class="addElement">
+                <div class="row">
+                    <div class="col c12">
+                        <div class="form-control">
+                          <input type="text" class="smooth" id="elementValue" name="elementValue" placeholder="Add Filename or delay....">
+                        </div>
+                    </div>
+                    <div class="col c6">
+                      <div class="form-control"><button href="#" class="btn btn-sm btn-c btn-fit black" id="addDelay" style="float: left">Add Delay</button></div>
+                    </div>
+                    <div class="col c6">
+                      <div class="form-control"><button href="#" class="btn btn-sm btn-c btn-fit blue" id="addElement" style="float: right">Add file</button></div>
+                    </div>
+                  </div>
+            </div>
+            <div class="form-control" style="text-align: middle"><button href="#" class="btn btn-sm btn-c blue btn-fit" id="savePlaylist">Save Playlist</button></div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col c12">
+        <div class="controls">
+            <h2>Additional Controls</h2>
+            <div class="row">
+                <div class="col c2">
+                  <button href="#" class="btn btn-sm btn-fit btn-c black" id="cancel">Cancel</button>
+                </div>
+                <div class="col c2">
+                  <button href="#" class="btn btn-sm btn-fit btn-c black" id="maintenance">Maintenance</button>
+                </div>
+                <div class="col c2">
+                  <button href="#" class="btn btn-sm btn-fit btn-c black" id="ledon">Led On</button>
+                </div>
+                <div class="col c2">
+                  <button href="#" class="btn btn-sm btn-fit btn-c black" id="ledoff">Led Off</button>
+                </div>
+                <div class="col c2">
+                  <button href="#" class="btn btn-sm btn-fit btn-c black" id="ledblink">Led Blink</button>
+                </div>
+                <div class="col c2">
+                  <button href="#" class="btn btn-sm btn-fit btn-c black" id="lederror">Led Error</button>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="row">
+      <div class="col c12">
+        <div class="controls">
+            <h2>Additional Settings (Advanced Use Only)</h2>
+            <div class="row">
+                <div class="col c4">
+                    <div class="form-control">
+                      <label for="ssid">Pen Up</label>
+                      <input type="text" class="smooth" id="pnu" name="pnu" placeholder="Pen up">
+                    </div>
+                </div>
+                <div class="col c4">
+                    <div class="form-control">
+                        <label for="ssid">Pen Down</label>
+                        <input type="text" class="smooth" id="pnd" name="pnd" placeholder="Pen down">
+                    </div>
+                </div>
+                <div class="col c4">
+                    <div class="form-control">
+                        <label for="ssid">Speed</label>
+                        <input type="text" class="smooth" id="spd" name="spd" placeholder="Speed">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col c4">
+                    <div class="form-control">
+                      <label for="ssid">Pen Home Up</label>
+                      <input type="text" class="smooth" id="phu" name="phu" placeholder="Pen Home Up">
+                    </div>
+                </div>
+                <div class="col c4">
+                    <div class="form-control">
+                        <label for="ssid">Pen Home Down</label>
+                        <input type="text" class="smooth" id="phd" name="pjd" placeholder="Pen Home Down">
+                    </div>
+                </div>
+                <div class="col c4">
+                  <div class="form-control">
+                    <label for="ssid">Jerk</label>
+                    <input type="text" class="smooth" id="jrk" name="jrk" placeholder="Jerk...">
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col c4">
+                    <div class="form-control">
+                        <label for="ssid">MAC</label>
+                        <input type="text" class="smooth" id="mac" name="mac" placeholder="Movement acceleration...">
+                    </div>
+                </div>
+                <div class="col c4">
+                    <div class="form-control">
+                        <label for="ssid">DAC</label>
+                        <input type="text" class="smooth" id="dac" name="dac" placeholder="Drawing acceleration...">
+                    </div>
+                </div>
+                <div class="col c4">
+                  <button href="#" style="margin-top: 35px" class="btn btn-sm btn-fit btn-c" id="saveSettings">Save Settings</button>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+document.getElementById('input-file-0')
+  .addEventListener('change', getFile)
+
+  let playlistFiles;
+
+  function getFile(event) {
+    const input = event.target
+    if ('files' in input && input.files.length > 0) {
+      uploadFileContent(
+      input.files[0])
+    }
+  }
+
+  function getPlaylist(){
+    if(playlistFiles.length > 0){
+     
+      let playlist = playlistFiles.map((element, index) => {
+      if(element.type == "file"){
+        return `<div class="element filename" data-type="file" data-filename="${element.name}">
+                  <div class="row">
+                    <div class="col c10">
+                        <h2>FILE - </h2><input data-index="${index}" class="elementName" value="${element.name}"/>
+                    </div>
+                    <div class="col c2">
+                        <button href="#" data-index="${index}" class="btn btn-sm btn-fit btn-c removeElement">X</button>
+                    </div>
+                  </div>
+                </div>`
+      }else{
+        return `<div class="element delay" data-type="pause" data-pause="${element.duration}">
+                  <div class="row">
+                    <div class="col c10">
+                        <h2>DELAY - </h2><input data-index="${index}" class="elementDuration" value="${element.duration/1000}"/>
+                    </div>
+                    <div class="col c2">
+                        <button href="#"  data-index="${index}" class="btn btn-sm btn-fit btn-c removeElement">X</button>
+                    </div>
+                  </div>
+                </div>`
+      }
+    })
+    $(".currentElements").html(playlist);
+    }
+    
+  }
+
+  function getFileSystem(){
+    log('Getting files on device...', true);
+    let fileRow = (filename) => `<div id="0" class="row file-upload-row">
+                                    <div class="col c6"><h2>${filename}</h2></div>
+                                    <div class="col c6">
+                                      <button  href="#" class="removeFile btn btn-sm btn-fit btn-c" data-file="${filename}">Delete</button>
+                                    </div>
+                                  </div>`
+    $.ajax({
+      url: '/rpc/FS.List',
+      data: JSON.stringify({path: '/mnt'}),
+      type: 'POST',
+      success: function(fileList) {
+        let htmlContent = fileList.map(file => fileRow(file));
+        $('#files').html(htmlContent);
+      }
+    })
+  }
+
+  $(document).on('click', '#addDelay', function(e){
+    let value = $('#elementValue').val()*1000;
+    if(!isNaN(value)){
+      playlistFiles.push({
+      type: "delay", duration: $('#elementValue').val()*1000
+    });
+    getPlaylist();
+    $('#elementValue').val('');
+    }else{
+      log("Error adding delay", true);
+    }
+  });
+
+  $(document).on('click', '#addElement', function(e){
+    playlistFiles.push({
+      type: "file", name: $('#elementValue').val()
+    });
+    getPlaylist();
+    $('#elementValue').val('');
+  });
+
+
+  $('#savePlaylist').on('click', function() {
+    log('Calling /rpc/Config.Set  ...', true);
+    console.log(playlistFiles);
+    console.log($("#loop").prop('checked'));
+    $.ajax({
+      url: '/rpc/Config.Set',
+      data: JSON.stringify({config: {playlist: { 
+        delay: $('#initialDelay').val()*1000, 
+        loop: $("#loop").prop('checked'),
+        files: JSON.stringify(playlistFiles)}
+      }}),
+      type: 'POST',
+      contentType: 'application/json',
+      success: function(data) {
+        log('Success. Saving and rebooting ...', true);
+        $.ajax({url: '/rpc/Config.Save', type: 'POST', data: JSON.stringify({"reboot": true})});
+      }
+    })
+  });
+
+
+  $(document).on('click', '.removeElement', function(e){
+    let index = $(this).attr('data-index');
+    console.log(playlistFiles);
+    console.log(index);
+    playlistFiles.splice(index, 1);
+    getPlaylist();
+  });
+
+  $(document).on('click', '.removeFile', function(e){
+    let filename = $(this).attr('data-file');
+    log(`Removing file - ${filename}`, true);
+    $.ajax({
+      url: '/rpc/FS.Remove',
+      data: JSON.stringify({filename: `/mnt/${filename}`}),
+      type: 'POST',
+      success: function() {
+        log("Success");
+        getFileSystem();
+      }
+    })
+ })
+
+
+  function uploadFileContent(file){
+    readFileContent(file).then(content => {
+      let filename = file.name;
+      console.log(filename)
+      putFile(filename, content);
+    }).catch(error => console.log(error))
+  }
+
+  let i = 0;
+
+  function putFile(filename, content) {
+    log('Calling /rpc/FS.Put  ...', true);
+    //check - need to see if the file exists already?!
+    let chunks = content.match(/(?=[\s\S])(?:.*\n?){1,50}/g);
+    i = 0;
+    log('File uploading', true);
+    putChunks(chunks[i], filename, false, chunks); 
+  };
+
+  function putChunks(chunk, filename, append, chunks){
+      $.ajax({
+      url: '/rpc/FS.Put',
+      data: JSON.stringify({filename: `/mnt/${filename}`, append: append, data: btoa(chunk)}),
+      type: 'POST',
+      success: function(data) {
+          append = true;
+          $('.upload-progress').css('width', `${i/chunks.length*100}%`)
+          if(i < chunks.length){
+            i++;
+            setTimeout(putChunks(chunks[i], filename, true, chunks), 100);
+          }else{
+            i = 0;
+            log('File upload...success', true);
+            setTimeout(getFileSystem(), 500);
+          }
+        }
+      })
+    }
+
+
+  function placeFileContent(target, file) {
+    readFileContent(file).then(content => {
+      target.value = content
+    }).catch(error => console.log(error))
+  }
+
+  function readFileContent(file) {
+    const reader = new FileReader()
+    return new Promise((resolve, reject) => {
+      reader.onload = event => resolve(event.target.result)
+      reader.onerror = error => reject(error)
+      reader.readAsText(file)
+    })
+  }
+
+  $('#addFile').on('click', function() {
+    const id = $('.file-upload-row').length;
+    $('.playlist').append(`<div id="${id}" class="file-upload-row">
+        <label for="input-file">Specify a file:</label><br>
+        <input type="file" id="input-file-${id}">
+      </div>`)
+  });
+
+  let config = {}
+
+  var log = function(msg, newline) {
+    var newlineChar = '\n';
+    if(newline){
+      newlineChar = '\n';
+    }else{
+      newlineChar = '';
+    }
+    $('<span/>').html(msg + newlineChar).appendTo('#result')
+  };
+
+  log('Calling /rpc/Config.Get ...', true);
+  $.ajax({
+    url: '/rpc/Config.Get',
+    success: function(data) {
+      config = data;
+      $('#initialDelay').val(config.playlist.delay/1000);
+      $('#loop').prop('checked', config.playlist.loop);
+      $('#pnu').val(config.gcode.pnu);
+      $('#pnd').val(config.gcode.pnd);
+      $('#phu').val(config.gcode.phu);
+      $('#phd').val(config.gcode.phd);
+      $('#spd').val(config.gcode.spd);
+      $('#mac').val(config.gcode.mac);
+      $('#dac').val(config.gcode.dac);
+      $('#jrk').val(config.gcode.jrk);
+      log('Result: ' + JSON.stringify(data), true);
+      playlistFiles = [];
+      if(config.playlist.files !== ""){
+        playlistFiles = JSON.parse(config.playlist.files);
+      }
+      $('#ssid').val(config.wifi.sta.ssid);
+      $('#pass').val(config.wifi.sta.pass);
+      getFileSystem();
+      getPlaylist();
+    }
+  });
+
+  $('#saveWifi').on('click', function() {
+    log('Calling /rpc/Config.Set  ...', true);
+    $.ajax({
+      url: '/rpc/Config.Set',
+      data: JSON.stringify({config: {wifi: {ap: {keep_enabled: true}, sta: {enable: true, ssid: $('#ssid').val(), pass: $('#pass').val()}}}}),
+      type: 'POST',
+      contentType: 'application/json',
+      success: function(data) {
+        log('Success. Saving and rebooting ...', true);
+        $.ajax({url: '/rpc/Config.Save', type: 'POST', data: JSON.stringify({"reboot": true})});
+      }
+    })
+  });
+
+
+  $('#saveSettings').on('click', function() {
+    log('Calling /rpc/Config.Set  ...', true);
+    $.ajax({
+      url: '/rpc/Config.Set',
+      data: JSON.stringify({config: {gcode: {
+        pnu: $('#pnu').val(),
+        pnd: $('#pnd').val(),
+        phu: $('#phu').val(),
+        phd: $('#phd').val(),
+        spd: $('#spd').val(),
+        mac: $('#mac').val(),
+        dac: $('#dac').val(),
+        jrk: $('#jrk').val(),
+      }}}),
+      type: 'POST',
+      contentType: 'application/json',
+      success: function(data) {
+        log('Success. Saving and rebooting ...', true);
+        $.ajax({url: '/rpc/Config.Save', type: 'POST', data: JSON.stringify({"reboot": true})});
+      }
+    })
+  });
+
+  
+
+  $('#upload').on('click', function() {
+    log('Calling /rpc/FS.Put  ...', true);
+    var chunks = $('#gcode').val().match(/(?=[\s\S])(?:.*\n?){1,50}/g);
+    var i = 0;
+    putChunks(chunks[0], false)    
+  });
+
+   $('#cancel').on('click', function() {
+    log('Calling /rpc/Cancel  ...', true);
+    $.ajax({
+      url: '/rpc/Cancel',
+      type: 'POST',
+      // contentType: 'application/json',
+      success: function(data) {
+        log('Resetting...', true);
+      }
+    })
+  });
+
+
+   $('#maintenance').on('click', function() {
+    log('Calling /rpc/Maintenance  ...', true);
+    $.ajax({
+      url: '/rpc/Maintenance',
+      type: 'POST',
+      // contentType: 'application/json',
+      success: function(data) {
+        log('Maintenance routine called', true);
+      }
+    })
+  });
+
+
+ $('#ledon').on('click', function() {
+    log('Calling /rpc/LedOn  ...', true);
+    $.ajax({
+      url: '/rpc/LedOn',
+      type: 'POST',
+      // contentType: 'application/json',
+      success: function(data) {
+        log('Success. Led On', true);
+      }
+    })
+  });
+
+   $('#ledoff').on('click', function() {
+    log('Calling /rpc/LedOff  ...', true);
+    $.ajax({
+      url: '/rpc/LedOff',
+      type: 'POST',
+      // contentType: 'application/json',
+      success: function(data) {
+        log('Success. Led Off', true);
+      }
+    })
+  });
+
+   $('#ledblink').on('click', function() {
+    log('Calling /rpc/LedBlink  ...', true);
+    $.ajax({
+      url: '/rpc/LedBlink',
+      type: 'POST',
+      // contentType: 'application/json',
+      success: function(data) {
+        log('Success. Led Blinking', true);
+      }
+    })
+  });
+
+
+   $('#lederror').on('click', function() {
+    log('Calling /rpc/LedError  ...', true);
+    $.ajax({
+      url: '/rpc/LedError',
+      type: 'POST',
+      // contentType: 'application/json',
+      success: function(data) {
+        log('Success. Led Error', true);
+      }
+    })
+  });
+
+
+</script>
+
+</body>
+</html>
