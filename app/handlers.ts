@@ -1,20 +1,18 @@
 import { beginCommand, endCommand, penOnCommand, penOffCommand } from "./jotoCommands.ts";
 
-export async function convertHandler(context: any) {
-  const body = await context.request.body.formData();
-  const file = body.get("file");
+export async function convertHandler(req: Request): Promise<Response> {
+  const formData = await req.formData();
+  const file = formData.get("file") as File | null;
 
   if (!file) {
-    context.response.status = 400;
-    context.response.body = "No SVG file uploaded.";
-    return;
+    return new Response("No SVG file uploaded.", { status: 400 });
   }
 
   await Deno.mkdir("uploads", { recursive: true });
 
   const destPath = `uploads/${file.name}`;
-  const fileData = await file.stream();
-  await Deno.writeFile(destPath, fileData);
+  const fileData = await file.arrayBuffer();
+  await Deno.writeFile(destPath, new Uint8Array(fileData));
 
   const svgFilePath = destPath;
   const gcodeFilePath = svgFilePath + ".g";
@@ -36,9 +34,7 @@ export async function convertHandler(context: any) {
 
   if (code !== 0) {
     console.error(`Error executing svg2gcode: ${new TextDecoder().decode(stderr)}`);
-    context.response.status = 500;
-    context.response.body = "Error converting SVG to GCODE.";
-    return;
+    return new Response("Error converting SVG to GCODE.", { status: 500 });
   } else {
     console.log(`Converted SVG to GCODE: ${new TextDecoder().decode(stdout)}`);
   }
@@ -47,30 +43,33 @@ export async function convertHandler(context: any) {
   gcode = gcode.replace(/\s*;.*$/gm, '');
   gcode = gcode.replace(/^\s*$/gm, '');
 
-  await Deno.writeTextFile(gcodeFilePath, gcode);
+  const headers = new Headers({
+    "Content-Disposition": `attachment; filename="converted.g"`,
+    "Content-Type": "application/octet-stream",
+  });
 
-  context.response.headers.set("Content-Disposition", `attachment; filename="converted.g"`);
-  context.response.body = await Deno.readFile(gcodeFilePath);
+  const response = new Response(gcode, { headers });
 
   await Deno.remove(gcodeFilePath);
   await Deno.remove(svgFilePath);
+
+  return response;
 }
 
-export async function jotHandler(context: any) {
-  const body = await context.request.body.formData();
-  const baseUrl = body.get("baseUrl");
-  const file = body.get("file");
+export async function jotHandler(req: Request): Promise<Response> {
+  const formData = await req.formData();
+  const baseUrl = formData.get("baseUrl") as string;
+  const file = formData.get("file") as File | null;
 
   if (!file) {
-    context.response.status = 400;
-    context.response.body = "No GCode file uploaded.";
-    return;
+    return new Response("No GCode file uploaded.", { status: 400 });
   }
 
-  const content = await file.text();
+  const fileData = await file.arrayBuffer();
+  const content = new TextDecoder().decode(fileData);
+  
   await putFile("jot.g", baseUrl, content);
 
-  // jot a file from the filesystem
   console.log('Calling /rpc/SAM3XDL  ...');
   await fetch(baseUrl + '/rpc/SAM3XDL', {
     method: 'POST',
@@ -80,7 +79,7 @@ export async function jotHandler(context: any) {
     body: JSON.stringify({ file: `/mnt/jot.g` }),
   });
 
-  context.response.body = "File uploaded successfully.";
+  return new Response("File uploaded successfully.");
 }
 
 async function putFile(filename: string, baseUrl: string, content: string) {
