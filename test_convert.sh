@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Define the API endpoint
-API_ENDPOINT="http://localhost:3000/convert"
+API_URL="${API_URL:-http://localhost:3000}"
+API_ENDPOINT="$API_URL/convert"
 
 # Path to the SVG file
 SVG_FILE_PATH="extents.svg"

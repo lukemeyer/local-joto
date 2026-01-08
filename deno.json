@@ -1,9 +1,10 @@
 {
   "imports": {
-    "@oak/oak": "jsr:@oak/oak@^17.1.4"
+    "@std/assert": "jsr:@std/assert@^0.219.1",
+    "@std/testing": "jsr:@std/testing@^0.219.1"
   },
   "compilerOptions": {
-    "lib": ["deno.ns"]
+    "lib": ["deno.ns", "dom"]
   },
   "tasks": {
     "start": "deno run --allow-read --allow-write --allow-env --allow-net --allow-run --watch=app/ app/main.ts",
